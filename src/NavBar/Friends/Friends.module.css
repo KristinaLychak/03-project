@@ -1,0 +1,10 @@
+.friends {
+  color: white;
+  padding-top: 200px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr 1fr  1fr;
+  
+}
