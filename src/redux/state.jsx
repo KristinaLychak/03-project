@@ -1,10 +1,9 @@
-export const addPostActionCreate = () => ({type:'ADD-POST'})
-export const updateNewPostTextActionCreate = (text) => ({type:'UPDATE-NEW-POST-TEXT', newText: text})
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 let store = {
-  _callSubscriber() {
-    console.log('state changed')
-  },
+  
   _state: {
     profilePage: {
       postData: [
@@ -14,9 +13,7 @@ let store = {
         { id: 4, message: "Relax", likeCount: 3 },
       ],
       newPostText: 'newText'
-      //     sidebar: [ { } ],
-    },
-
+},
 
     dialogsPage: {
       DialogsData: [
@@ -34,64 +31,51 @@ let store = {
         { id: 3, message: 'Yo-Yo' },
         { id: 4, message: 'Yo-Yo' },
         { id: 5, message: 'Yo-Yo' },
-      ]
+      ],
+      newMessageBody: ''
     },
+    sidebar: { 
+
+    },
+  },
+
+  _callSubscriber() {
+    console.log('state changed')
   },
 
   getState() {
     return this._state;
   },
 
-  // addPost() {
-  //   let newPost = {
-  //     id: 5,
-  //     message: this._state.profilePage.newPostText,
-  //     likeCount: 0
-  //   }
-  //   this._state.profilePage.postData.push(newPost);
-  //   this._state.profilePage.newPostText = '';
-  //   this._callSubscriber(this._state);
-
-  
-  // updatenewPostText(newText) {
-  //   this._state.profilePage.newPostText = newText;
-  //   this._callSubscriber(this._state);
-  // },
-
   subscribe(observer) {
     this._callSubscriber = observer
   },
 
   dispatch (action) {
-    if (action.type === 'ADD-POST'){
-
-      let newPost = {
-        id: 5,
-        message: this._state.profilePage.newPostText,
-        likeCount: 0
-      }
-      this._state.profilePage.postData.push(newPost);
-      this._state.profilePage.newPostText = '';
+      this._state.profilePage = profileReducer(this._state.profilePage, action);
+      this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+      this._state.sidebar = sidebarReducer(this._state.sidebar, action);
       this._callSubscriber(this._state);
     }
-    else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-      this._state.profilePage.newPostText = action.newText;
-    this._callSubscriber(this._state);
-
-    }
   }
-}
 
 
+    window.store = store;
+
+    export default store;
   
-  
 
+// export const addPostActionCreate = () => ({type:'ADD_POST'})
+// export const updateNewPostTextActionCreate = (text) => ({type:'UPDATE_NEW_POST_TEXT', newText: text})
 
+// export const sendMessageCreate = () => ({type:'SEND_MESSAGE'}) 
+// export const updateNewMessageBodyCreate = (body) => ({type:'UPDATE_NEW_MESSAGE_BODY', body: body })
 
+// const ADD_POST = 'ADD_POST';
+// const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+// const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
+// const SEND_MESSAGE = 'SEND_MESSAGE';
 
-window.store = store;
-
-export default store;
 
 
 
