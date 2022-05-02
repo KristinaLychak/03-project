@@ -5,31 +5,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import {Provider} from 'react-redux';
 
 
 
-let rerenderEntireTree = (state) => {
+// let rerenderEntireTree = () => {
   ReactDOM.render(
     <BrowserRouter>
-      <App state={store.getState()} dispatch={store.dispatch.bind(store)} store = {store}/>
+    <Provider store={store}>
+      <App />
+      </Provider>
       </BrowserRouter>, document.getElementById('root'));
-}
 
 
-rerenderEntireTree (store.getState());
-store.subscribe (() =>{
-  let stete = store.getState();
-  rerenderEntireTree(store);
+// rerenderEntireTree ();
 
-});
+// store.subscribe (() =>{
+//   rerenderEntireTree();
+// });
   
 
 
-reportWebVitals();
-
-
-// let rerenderEntireTree =(state) => {
-// const root = ReactDOM.createRoot(document.getElementById('root'));
+{/* 
+{/* // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
 //   <React.StrictMode>
 //     <BrowserRouter>
@@ -41,7 +39,7 @@ reportWebVitals();
 // }
 
 
-// let rerenderEntireTree = (state) => {
+// let rerenderEntireTree = (state) => { 
 //   ReactDOM.render(
 //     <BrowserRouter>
 //       <App state={store.getState()} dispatch={store.dispatch.bind(store)} store = {store}/>
@@ -60,3 +58,8 @@ reportWebVitals();
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 
+// reportWebVitals();
+
+// state={store.getState()} dispatch={store.dispatch.bind(store)} store = {store}
+
+// let rerenderEntireTree =(state) => { */}
