@@ -8,19 +8,19 @@ import {updateNewMessageBodyCreate, sendMessageCreate} from '../redux/dialogs-re
 
 const Dialogs = (props) => {
 
-    let state = props.store.getState().dialogsPage; 
+    let state = props.dialogsPage; 
 
     let dialogsElement = state.DialogsData.map(dialogs => < DialogsItem name={dialogs.name} id={dialogs.id}/>);
     let messageElement = state.MessageData.map(message => <Message message={message.message} />);
     let newMessageBody = state.newMessageBody;
 
     let onSendMessageClick =() => {
-        props.store.dispatch(sendMessageCreate());
+        props.sendMessage();
     }
 
     let onNewMessageChange =(e) => {
          let body = e.target.value;
-         props.store.dispatch(updateNewMessageBodyCreate(body));    
+         props.updateNewMessageBody(body);    
     }
 
     return (

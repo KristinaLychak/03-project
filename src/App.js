@@ -3,13 +3,13 @@ import './App.css';
 import Header from './Header/Header';
 import NavBar from './NavBar/NavBar';
 import Profile from './Profile/Profile';
-import Dialogs from './Dialogs/Dialogs';
 import News from './News/News';
 import Music from './Music/Music';
 import Settings from './Settings/Settings';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Friends from './NavBar/Friends/Friends';
 import { addPost } from './redux/state';
+import DialogsContainer from './Dialogs/DialogsContainer';
 
 
 
@@ -22,10 +22,9 @@ const App = (props) => {
       <NavBar  />
       <div className='app-wrapper-content'>
           <Routes>
-            <Route path="/dialogs" element={<Dialogs store = {props.store}/>} />  
+            <Route path="/dialogs" element={<DialogsContainer store = {props.store}/>} />  
             <Route path="/profile" element={<Profile 
-                    profilePage = {props.state.profilePage} 
-                    dispatch = {props.dispatch}/>} />
+                    store = {props.store}/>} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
