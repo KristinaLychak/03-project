@@ -10,6 +10,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Friends from './NavBar/Friends/Friends';
 import { addPost } from './redux/state';
 import DialogsContainer from './Dialogs/DialogsContainer';
+import UsersContainer from './Users/UsersContainer';
 
 
 
@@ -28,6 +29,7 @@ const App = (props) => {
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/users" element={<UsersContainer />} />
             <Route path="/friend" element={<Friends friendsData = {props.friendsData} />} />
           </Routes>
       </div>
