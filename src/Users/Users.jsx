@@ -1,30 +1,47 @@
-import React from "react";
+import React, { Component } from "react";
 import styles from './Users.module.css';
 import * as axios from "axios";
 import userPhoto from '../assets/images/images2.png';
 
 
-let Users = (props) => {
-    let getUsers = () => {
-     if (props.users.length === 0) {
-     axios.get ("https://social-network.samuraijs.com/api/1.0/users") .then (response => {
-    props.setUsers(response.data.items);
-        
-     });}
-     
+class Users extends React.Component {
+    componentDidMount () {
+        axios.get (`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count = ${this.props.pageSize}`) 
+        .then (response => {
+        this.props.setUsers(response.data.items); 
+        this.props.setTotalUsersCount(response.data.totalCount);   
+        }) 
     }
-     return <div>
-         <button onClick = {getUsers}>Get Users</button>
+
+    onPageChanged = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get (`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count = ${this.props.pageSize}`) 
+        .then (response => {
+        this.props.setUsers(response.data.items);  
+        })  
+    }
+    
+    render () {
+            let pagesCount = Math.ceil (this.props.totalUsersCount/this.props.pageSize);
+            let pages = [];
+            for (let i=1; i <= pagesCount; i++)
+            {pages.push(i);}
+    return <div>
+        <div>
+            {pages.map(p => {
+                return <span className = {this.props.currentPage === p && styles.selectedPage  } 
+                onClick={(e) => {this.onPageChanged(p);}}> {p} </span>})}
+        </div>
          {
-         props.users.map( u => <div key={u.id}>
+          this.props.users.map( u => <div key={u.id}>
              <span>
                  <div>
                      <img src = {u.photos.small != null ? u.photos.small : userPhoto } className = {styles.userPhoto}/>
                  </div>
                  <div>
                  {u.followed
-                  ? <button onClick={() => {props.unfollow(u.id) } } >Unfollow</button> 
-                  : <button onClick={() => {props.follow(u.id) } } >Follow</button> }
+                  ? <button onClick={() => { this.props.unfollow(u.id) } } >Unfollow</button> 
+                  : <button onClick={() => { this.props.follow(u.id) } } >Follow</button> }
                  </div>
              </span>
              <span>
@@ -39,21 +56,12 @@ let Users = (props) => {
              </span>
          </div>)}
          </div>}
+};
+
 
 export default Users;
 
 
-// [
-//     {
-//       id: 1, photoUrl:'https://images.unsplash.com/photo-1615497001839-b0a0eac3274c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&w=1000&q=80', 
-//       followed: false, fullname: 'Marichka', status: 'I am a teacher', location: { city: 'Lviv', country: 'Ukraine' }},
-//     {
-//       id: 2, photoUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbmnSabWD5a0W1Sasnht8NGqrRCDtSzFapGQ&usqp=CAU', 
-//       followed: true, fullname: 'Yaryna', status: 'I am a menager', location: { city: 'Lviv', country: 'Ukraine' }},
-//     {
-//       id: 3, photoUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo-WCJO95DnDSeEKYUZyA7kdGe77bvM_P3Qw&usqp=CAU', 
-//       followed: false, fullname: 'Andrew', status: 'And I am a boss', location: { city: 'Lviv', country: 'Ukraine' }},
-//     {
-//       id: 4, photoUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdH_Ow8KdUOjLq3mrep39gj6ZJWx9Wdx8meQ&usqp=CAU', 
-//       followed: false, fullname: 'Yaroslav', status: 'I am a good cook', location: { city: 'Lviv', country: 'Ukraine' }}
-//     ]
+{/* 
+     id: 1, photoUrl:'https://images.unsplash.com/photo-1615497001839-b0a0eac3274c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&w=1000&q=80', 
+    followed: false, fullname: 'Marichka', status: 'I am a teacher', location: { city: 'Lviv', country: 'Ukraine' }}, */}

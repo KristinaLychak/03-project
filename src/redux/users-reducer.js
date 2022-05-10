@@ -1,30 +1,22 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 export const FOLLOWAC = (usersId) => ({ type: 'FOLLOW', usersId })
 export const UNFOLLOWAC = (usersId) => ({ type: 'UNFOLLOW', usersId })
 export const SET_USERSAC = (users) => ({ type: 'SET_USERS', users })
+export const SET_CURRENTPAGEAS = (currentPage) => ({ type: 'SET_CURRENT_PAGE', currentPage })
+export const setTotalUsersCountAS = (totalUsersCount) => ({ type: 'SET_TOTAL_USERS_COUNT', count: totalUsersCount })
+
+
 
 
 let initialState = {
-  users: [
-  //   {
-  //     id: 1, photoUrl:'', followed: false, fullname: 'Marichka', status: 'I am a teacher',
-  //     location: { city: 'Lviv', country: 'Ukraine' }
-  //   },
-  //   {
-  //     id: 2, photoUrl:'', followed: false, fullname: 'Yaryna', status: 'I am a menager',
-  //     location: { city: 'Lviv', country: 'Ukraine' }
-  //   },
-  //   {
-  //     id: 3, photoUrl:'', followed: false, fullname: 'Andrew', status: 'And I am a boss',
-  //     location: { city: 'Lviv', country: 'Ukraine' }
-  //   },
-  //   {
-  //     id: 4, photoUrl:'', followed: false, fullname: 'Yaroslav', status: 'I am a good cook',
-  //     location: { city: 'Lviv', country: 'Ukraine' }
-  //   },
-  ]
+  users: [ ],
+  pageSize: 5,
+  totalUsersCount: 0,
+  currentPage: 1
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -52,8 +44,14 @@ const usersReducer = (state = initialState, action) => {
 
         case SET_USERS: {
       return {
-        ...state,users:[...state.users, ...action.users] 
+        ...state,users: action.users
         }}
+
+        case SET_CURRENT_PAGE: {
+          return { ...state,currentPage: action.users}}
+
+          case SET_TOTAL_USERS_COUNT: {
+            return { ...state,totalUsersCount: action.count}}
           
           
     default:
@@ -61,4 +59,5 @@ const usersReducer = (state = initialState, action) => {
           }
         }
   
+
 export default usersReducer;
