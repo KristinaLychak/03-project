@@ -20,8 +20,8 @@ class UsersAPIComponent extends React.Component {
     }
 
     onPageChanged = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber) 
         this.props.toggelIsFetting (true);
-        this.props.setCurrentPage(pageNumber)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count = ${this.props.pageSize}`)
             .then(response => {
                 this.props.toggelIsFetting (false);
@@ -52,7 +52,11 @@ class UsersAPIComponent extends React.Component {
                 isFetching: state.usersPage.isFetching
             }
         }
-        // let mapDispatchToProps = (dispatch) => {
+       
+export default connect(mapStateToProps, 
+    {follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, toggelIsFetting})(UsersAPIComponent);
+
+     // let mapDispatchToProps = (dispatch) => {
         //     return {
         //         follow: (userId) => {
         //             dispatch(FOLLOWAC(userId));
@@ -75,7 +79,3 @@ class UsersAPIComponent extends React.Component {
         //         }
         //     }
         // }
-    
-
-export default connect(mapStateToProps, 
-    {follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, toggelIsFetting})(UsersAPIComponent);

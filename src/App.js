@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './Header/Header';
 import NavBar from './NavBar/NavBar';
-import Profile from './Profile/Profile';
+import ProfileContainer from './Profile/ProfileContainer';
 import News from './News/News';
 import Music from './Music/Music';
 import Settings from './Settings/Settings';
@@ -24,7 +24,7 @@ const App = (props) => {
       <div className='app-wrapper-content'>
           <Routes>
             <Route path="/dialogs" element={<DialogsContainer store = {props.store}/>} />  
-            <Route path="/profile" element={<Profile 
+            <Route path="/profile" element={<ProfileContainer 
                     store = {props.store}/>} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />

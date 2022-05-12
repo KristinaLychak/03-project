@@ -3,7 +3,7 @@ import preloder from '../../../assets/images/preloading.gif';
 
 
 let Preloader =(props) => {
-    return <div style={{backroundcolor: 'white'}}>
+    return <div style={{backgroundColor: 'white'}}>
         {<img src = {preloder}/>}
     </div>
 }
