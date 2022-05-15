@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './Header/Header';
+import HeaderContainer from './Header/HeaderContainer';
 import NavBar from './NavBar/NavBar';
 import ProfileContainer from './Profile/ProfileContainer';
 import News from './News/News';
@@ -18,13 +18,13 @@ const App = (props) => {
   return (
     
     <div className='app-wrapper'>
-      <Header />
+      <HeaderContainer />
       <NavBar  />
       <div className='app-wrapper-content'>
           <Routes>
             <Route path="/dialogs" element={<DialogsContainer store = {props.store}/>} />  
-            <Route path='/profile/:userId' element={<ProfileContainer />} />
-            {/* <Route path='/profile' element={<ProfileContainer />} /> */}
+            <Route path="/profile/:userId" element={<ProfileContainer />} />
+            <Route path='/profile' element={<ProfileContainer />} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
