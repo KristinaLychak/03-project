@@ -1,5 +1,5 @@
 import React from "react";
-import { follow, setUsers, unFollow, setCurrentPage, setTotalUsersCount, toggelIsFetting, toggelFollowingProgress } from "../redux/users-reducer";
+import { follow, setUsers, unFollow, setCurrentPage, getUsers, toggelFollowingProgress } from "../redux/users-reducer";
 import Users from "./Users";
 import { connect } from 'react-redux';
 import * as axios from "axios";
@@ -11,25 +11,12 @@ import { usersAPI } from "../API/api";
 
 class UsersAPIComponent extends React.Component {
     componentDidMount() {
-        this.props.toggelIsFetting (true);
-       usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggelIsFetting (false);
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount);
-            })
+        this.props.getUsers ((this.props.currentPage, this.props.pageSize))
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber) 
-        this.props.toggelIsFetting (true);
-        usersAPI.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                this.props.toggelIsFetting (false);
-                this.props.setUsers(data.items);
-            })
+        this.props.getUsers ((pageNumber, this.props.pageSize))
     }
-    
 
     render() {
         
@@ -41,7 +28,6 @@ class UsersAPIComponent extends React.Component {
             users={this.props.users}
             follow={this.props.follow}
             unfollow={this.props.unfollow}
-            toggelFollowingProgress= {this.props.toggelFollowingProgress}
             followingInProgress = {this.props.followingInProgress} />
             </>}}
 
@@ -58,7 +44,7 @@ class UsersAPIComponent extends React.Component {
         }
        
 export default connect(mapStateToProps, 
-    {follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, toggelIsFetting, toggelFollowingProgress})(UsersAPIComponent);
+    {follow, unFollow, setUsers, setCurrentPage, toggelFollowingProgress, getUsers})(UsersAPIComponent);
 
      // let mapDispatchToProps = (dispatch) => {
         //     return {
